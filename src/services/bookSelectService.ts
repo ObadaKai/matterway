@@ -23,7 +23,11 @@ export default class BookSelectService {
     if (page.url().includes("choiceawards")) return this.pickRandomBook(page);
 
     // After picking a random book get the title of it and return it
-    if (page.url().includes("book/show")) return (await this.getBookTitle(page)).replace("\n", "").trim();
+    if (page.url().includes("book/show")) {
+      const bookTitle = await this.getBookTitle(page);
+      if (!bookTitle) return;
+      return bookTitle.replace("\n", "").trim();
+    }
   }
 
   async hideModal(page: Page) {
@@ -40,7 +44,7 @@ export default class BookSelectService {
     return undefined;
   }
 
-  async getBookTitle(page: Page): Promise<string> {
+  async getBookTitle(page: Page): Promise<string | null | undefined> {
     const bookTitleSelector1 = ".BookPageTitleSection__title .Text__title1";
     const bookTitleSelector2 = "#bookTitle";
 

@@ -31,7 +31,7 @@ export default class AmazonService {
     const searchBoxSubmitButtonSelector = "#nav-search-submit-button";
 
     const searchBoxInput = await page.$(searchBoxInputSelector);
-    await searchBoxInput?.evaluate((el, value) => (el.value = value), bookName);
+    await searchBoxInput?.evaluate((el: any, value) => (el.value = value), bookName);
     const searchBoxSubmitButton = await page.$(searchBoxSubmitButtonSelector);
     await searchBoxSubmitButton?.click();
   }
